@@ -8,6 +8,8 @@ A multiuser questing system on-top of Ruby and Redis.  This was purpose built fo
 Ruby-Quest relies on data stored in redis.  The following lists all the keys that contain data from ruby-quest.  Words with dollar-signs ($) are variables.  e.g. ``` $context.$event_name.selectors: Set ``` is a double pointer to a redis set
 
 ```ruby
+#Per Context
+############################################################################################################
 $context.active_quests: Set          #The current active quests for $context
 $context.$event_name.selectors: Set  #The quests selectors that are applicable for a given context and event
 $context.$quest_name.selectors: Set  #The given selectors applicable for a quest
