@@ -6,3 +6,9 @@ A multiuser questing system on-top of Ruby and Redis.  This was purpose built fo
 ##Redis Keys
 ===========
 
+```ruby
+$context.active_quests: Set
+$context.$event_name.selectors: Set
+$context.$quest_name.selectors: Set
+$context.$quest_name.variables: Hash
+```
