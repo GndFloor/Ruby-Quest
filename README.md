@@ -28,7 +28,9 @@ selector_to_&selector
 ##Files
 * config/
   * init.rb - Initialize an environment from scratch
+  * settings.rb - Contains configuration handles like redis prefix
   * initializers/* - Any *.rb files in here will be loaded automatically at startup
 * lib/
-  * data.rb - Contains interface to database documents
+  * data.rb  - Contains interface to database documents
   * event.rb - Useful helpers for processing events like unboxing & boxing
+  * event_queue.rb - Handles the incomming and outgoing event data

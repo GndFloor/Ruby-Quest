@@ -7,6 +7,9 @@ end
 Dir.chdir File.expand_path("../", File.dirname(__FILE__))
 
 def load_files
+  #Load settings
+  load './config/settings.rb'
+
   #Load all the initializers
   Dir.chdir "./config/initializers" do
     Dir["*.rb"].each { |f| load "./"+f }
