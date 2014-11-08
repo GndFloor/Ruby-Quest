@@ -24,3 +24,11 @@ selector_to_&selector
 
 
 ```
+
+##Files
+* config/
+  * init.rb - Initialize an environment from scratch
+  * initializers/* - Any *.rb files in here will be loaded automatically at startup
+* lib/
+  * data.rb - Contains interface to database documents
+  * event.rb - Useful helpers for processing events like unboxing & boxing
