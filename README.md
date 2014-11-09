@@ -35,3 +35,24 @@ selector_to_&selector
   * event_queue.rb     - Handles the incomming and outgoing event data
   * main_event_loop.rb - Process events or block
   * dispatch_events.rb - Manages dispatching events to the appropriate handlers
+
+##Event example
+``ruby
+#event_name
+#  The name of this event
+#event_context [Optional]
+#  The context that may have an active quest with listeners bound to events with this event_name.
+#event_selector [Optional]
+#  What quest and action handlers is this event destined to? This is added by ruby-quest internally
+#  after inferring the possible handlers from the event_name nad event_context
+example_event = {
+  event_name: "my_event_name",
+  event_context: "cb02ea811d518fbcbac71857b3b69654",
+  event_selector: "my_quest#my_action"
+}
+
+#The valid combinations are 
+# {event_name} - Multicast to all relavent contexts
+# {event_name, event_context} - Multicast to all relavent event_selector(s)
+# {event_name, event_context, event_selector} - Send to one specific quest action
+```
