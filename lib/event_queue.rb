@@ -1,5 +1,5 @@
 def dequeue_event__blocking
-  stringized_event = $redis.blpop(REDIS_QUEUE_KEY, 0)
+  stringized_event = $redis.blpop(REDIS_QUEUE_KEY, 0)[1]
 
   event = nil
   begin
