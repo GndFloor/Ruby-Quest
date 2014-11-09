@@ -16,9 +16,7 @@ def load_files
   end
 
   #Load all lib files
-  Dir.chdir "./lib" do
-    Dir["*.rb"].each { |f| load "./"+f }
-  end
+  Dir.glob("./lib/**/*.rb").each { |f| load "./"+f }
 end
 
 load_files

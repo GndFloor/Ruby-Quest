@@ -35,6 +35,9 @@ selector_to_&selector
   * event_queue.rb     - Handles the incomming and outgoing event data
   * main_event_loop.rb - Process events or block
   * dispatch_events.rb - Manages dispatching events to the appropriate handlers
+  * cron/
+    * cron_event_loop  - Analagous to the main_event_loop, except this one manages the time priority and time general events
+    * priority_time_event_queue - A special priority queue that moves events to the main queue when they are ready to be fired
 
 ##Event example
 ``ruby
