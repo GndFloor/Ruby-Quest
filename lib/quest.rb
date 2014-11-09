@@ -42,3 +42,35 @@ def quest name
 
   yield
 end
+
+#Modify quests
+def add_quest_to_context(quest_name, context)
+  #Verify quest exists
+  raise "No such quest named #{quest_name.inspect}" unless $quests_hash[quest_name]
+
+  quest_hash = $quests_hash[quest_name]
+  
+  quest_was_active = $redis.sadd(k_active_quests_for_context__set context, quest_name) == 0 ? true : false
+  return if quest_was_active
+
+  #todo: Add quest information to rest of
+  #relavent keys
+end
+
+#Helper utilities
+###########################################################################
+def selector_for(quest_name:, action_name:)
+  {quest_name: quest_name, action_name: action_name}.to_json
+end
+
+def quest_name_for_selector selector
+  return JSON.parse(selector)["quest_name"]
+rescue => e
+  raise "Could not parse quest_name from selector after trying to convert: #{selector.inspect} from json, Error: #{e.inspect}"
+end
+
+def action_name_for_selector selector
+  return JSON.parse(selector)["action_name"]
+rescue => e
+  raise "Could not parse action_name from selector after trying to convert: #{selector.inspect} from json, Error: #{e.inspect}"
+end
