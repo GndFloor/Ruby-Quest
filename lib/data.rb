@@ -1,19 +1,27 @@
-def active_quests_for_context(context)
-  $redis.smembers("#{REDIS_PREFIX}#{context}.active_quests")
+#Keys for the various redis types
+####################################################################################################
+#Quests for the current context
+def k_active_quests_for_context__set(context)
+  "#{REDIS_PREFIX}#{context}.active_quests"
 end
 
-def selectors_for_event_name_and_context(event_name, context)
-  $redis.smembers("#{REDIS_PREFIX}#{context}.#{event_name}.selectors")
+#Get a list of selectors (quest+action) for an event and context
+def k_selectors_for_event_name_and_context__set(event_name, context)
+  "#{REDIS_PREFIX}#{context}.#{event_name}.selectors"
 end
 
-def selectors_for_quest_name_and_context(quest_name, context)
-  $redis.smembers("#{REDIS_PREFIX}#{context}.#{quest_name}.selectors")
+#Lookup a list of selectors (quest+action) for a particular quest
+def k_selectors_for_quest_name_and_context__set(quest_name, context)
+  "#{REDIS_PREFIX}#{context}.#{quest_name}.selectors"
 end
 
-def variables_for_quest_name_and_context(quest_name, context)
-  $redis.smembers("#{REDIS_PREFIX}#{context}.#{quest_name}.variables")
+#Lookup member variables for a particular context
+def k_variables_for_quest_name_and_context__hash(quest_name, context)
+  "#{REDIS_PREFIX}#{context}.#{quest_name}.variables"
 end
 
-def contexts_for_event_name(event_name)
-  $redis.smembers("#{REDIS_PREFIX}#{event_name}.contexts")
+#Lookup all matching contexts for an event name
+def k_contexts_for_event_name__set(event_name)
+  "#{REDIS_PREFIX}#{event_name}.cntexts"
 end
+####################################################################################################
