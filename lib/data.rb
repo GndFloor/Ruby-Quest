@@ -16,7 +16,7 @@ def k_selectors_for_quest_name_and_context__set(quest_name, context)
 end
 
 #Lookup member variables for a particular context
-def k_variables_for_quest_name_and_context__hash(quest_name, context)
+def k_variables_for_quest_name_and_context__string(quest_name, context)
   "#{REDIS_PREFIX}#{context}.#{quest_name}.variables"
 end
 
