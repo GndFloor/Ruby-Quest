@@ -50,7 +50,7 @@ def add_quest_to_context(quest_name, context)
 
   quest_hash = $quests_hash[quest_name]
   
-  quest_was_active = $redis.sadd(k_active_quests_for_context__set context, quest_name) == 0 ? true : false
+  quest_was_active = $redis.sadd(k_active_quests_for_context__set context, quest_name)
   return if quest_was_active
 
   #todo: Add quest information to rest of
