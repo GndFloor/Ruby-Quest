@@ -53,8 +53,24 @@ def add_quest_to_context(quest_name, context)
   quest_was_active = !$redis.sadd(k_active_quests_for_context__set(context), quest_name)
   return if quest_was_active
 
-  #todo: Add quest information to rest of
-  #relavent keys
+  #Get all selector names for quest
+  quest_selectors = quest_hash.map do |action_name, info|
+    selector_for quest_name: quest_name, action_name: action_name
+  end
+  $redis.sadd k_selectors_for_quest_name_and_context__set(quest_name, context), quest_selectors
+
+  #Collect selectors based on what events
+  #each action responds to
+  event_name_to_selectors = Hash.new([])
+  quest_hash.each do |action_name, info|
+    info[:on].each do |event_name|
+      event_name_to_selectors[event_name] << selector_for(quest_name: quest_name, action_name: action_name)
+    end
+  end
+
+  event_name_to_selectors.each do |event_name, selectors|
+    $redis.sadd(k_selectors_for_event_name_and_context__set(event_name, context), selectors)
+  end
 end
 
 #Helper utilities

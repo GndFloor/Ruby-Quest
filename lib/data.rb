@@ -1,4 +1,4 @@
-#Keys for the various redis types
+
 ####################################################################################################
 #Quests for the current context
 def k_active_quests_for_context__set(context)
