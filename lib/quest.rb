@@ -6,8 +6,7 @@
 #{
 #  "my_quest" => {
 #    "my_action" => {
-#      :block => {
-#      },
+#      :block => <#ExecutableCodeBlock>,
 #      :on => [
 #        "my_event_a"
 #      ],

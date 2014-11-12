@@ -39,7 +39,6 @@ $context.active_quests: Set          #The current active quests for $context
 $context.$event_name.selectors: Set  #The quests selectors that are applicable for a given context and event
 $context.$quest_name.selectors: Set  #The given selectors applicable for a quest
 $context.$quest_name.variables: Hash #The "instance" variables that are part of an active quest
-$context.$quest_name.dereferences
 
 #Global
 ################################################################################################
