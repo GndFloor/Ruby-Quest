@@ -32,11 +32,9 @@ def quest name
   #Add default overridable actions
   ######################################################################
   action "init" do
-    @lol = "Hi"
   end
 
   action "dealloc" do
-    puts "Default finialize action"
   end
   ######################################################################
 
@@ -44,41 +42,51 @@ def quest name
 end
 
 def call_quest(quest_name:, action_name:, context:, event:)
-  @context = context
-  @event = event
-  @action_name = action_name
-  @quest_name = quest_name
+  my_context = Class.new
+  my_context.instance_exec do
+    @context = context
+    @event = event
+    @action_name = action_name
+    @quest_name = quest_name
 
-  instance_variables = {}
+    instance_variables = {}
 
-  #Call and detect changes to instance variables
-  instance_variables_before = self.instance_variables
+    #Call and detect changes to instance variables
+    instance_variables_before = my_context.instance_variables
 
-  #Load instance variables from redis
-  instance_variables_string = $redis.get k_variables_for_quest_name_and_context__string(@quest_name, @context)
-  instance_variables_string ||= "{}"
-  begin
-    instance_variables = JSON.parse(instance_variables_string)
-  rescue => e
-    raise "Could not parse instance_variables from quest: #{@quest_name}, instance variables retrieved was #{instance_variables_string}.  Error: #{e.inspect}"
+    #Load instance variables from redis
+    instance_variables_string = $redis.get k_variables_for_quest_name_and_context__string(@quest_name, @context)
+    instance_variables_string ||= "{}"
+    begin
+      instance_variables = JSON.parse(instance_variables_string)
+    rescue => e
+      raise "Could not parse instance_variables from quest: #{@quest_name}, instance variables retrieved was #{instance_variables_string}.  Error: #{e.inspect}"
+    end
+    instance_variables.each {|k, v| self.instance_variable_set(k, v)}
+    
+    self.instance_exec &$quests_hash[quest_name][action_name][:block]
+
+    #Add new instance variables if this is the init action
+    if @action_name == "init"
+      new_instance_variables = self.instance_variables - instance_variables_before
+      new_instance_variables.each do |instance_variable|
+        instance_variables[instance_variable] = self.instance_variable_get(instance_variable)
+      end
+    else
+      instance_variables.each do |k, v|
+        instance_variables[k] = self.instance_variable_get(k)
+      end
+    end
+
+    #Save instance variables
+    begin
+      instance_variables_string = instance_variables.to_json
+    rescue => e
+      raise "Could not convert instance variables back into a JSON string for storing in the database.  Please check that the given instance variables are serializable objects.  I'm trying to serialize: #{instance_variables.inspect}, error: #{e.inspect}"
+    end
+
+    $redis.set k_variables_for_quest_name_and_context__string(@quest_name, @context), instance_variables_string
   end
-  
-  $quests_hash[quest_name][action_name][:block].call
-
-  #Add new instance variables
-  new_instance_variables = self.instance_variables - instance_variables_before
-  new_instance_variables.each do |instance_variable|
-    instance_variables[instance_variable] = self.instance_variable_get(instance_variable)
-  end
-
-  #Save instance variables
-  begin
-    instance_variables_string = instance_variables.to_json
-  rescue => e
-    raise "Could not convert instance variables back into a JSON string for storing in the database.  Please check that the given instance variables are serializable objects.  I'm trying to serialize: #{instance_variables.inspect}, error: #{e.inspect}"
-  end
-
-  $redis.set k_variables_for_quest_name_and_context__string(@quest_name, @context), instance_variables_string
 end
 
 #Modify quests

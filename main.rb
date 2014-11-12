@@ -1,28 +1,19 @@
 require File.expand_path("./config/init.rb", File.dirname(__FILE__))
 
-quest "my_quest" do
+quest :my_example_quest do
   action :init do
-    @lol = "no"
+    #Create a new instance variable
+    @counter = 0
   end
 
-  action :my_action, :on => ["test"] do
-    puts @lol
-    @lol = 4
-    puts @lol
-
-    @hey = [3, 4, 5, 6]
-  end
-
-  action :other_action, :on => [] do
-    puts @lol
-    puts @hey
+  action :my_action, :on => ["test_event"] do
+    @counter += 1
+    p @counter
   end
 end
-context = SecureRandom.hex
 
-add_quest_to_context("my_quest", context)
-p $redis.smembers(k_active_quests_for_context__set(context))
-add_quest_to_context("my_quest", context)
+context = "a_user_session_key"
+add_quest_to_context "my_example_quest", context
 
-call_quest quest_name: "my_quest", action_name: "my_action", context: context, event: {}
-call_quest quest_name: "my_quest", action_name: "other_action", context: context, event: {}
+call_quest quest_name: "my_example_quest", action_name: "my_action", context: context, event: {}
+call_quest quest_name: "my_example_quest", action_name: "my_action", context: context, event: {}
