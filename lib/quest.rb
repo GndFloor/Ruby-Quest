@@ -35,7 +35,7 @@ def action name, params={:on => []}, &block
 
   #Per action info
   info = {:block => block, :on => on_events}
-  $quests_hash[@quest_name] = info
+  $quests_hash[@quest_name][name] = info
 end
 
 def quest name
@@ -112,6 +112,7 @@ def add_quest_to_context(quest_name, context)
   quest_hash = $quests_hash[quest_name]
   
   quest_was_active = !$redis.sadd(k_active_quests_for_context__set(context), quest_name)
+  puts "Quest was active = #{quest_was_active}"
   return if quest_was_active
 
   #Collect selectors based on what events
