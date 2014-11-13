@@ -1,4 +1,3 @@
-
 ####################################################################################################
 #Quests for the current context
 def k_active_quests_for_context__set(context)
@@ -8,11 +7,6 @@ end
 #Get a list of selectors (quest+action) for an event and context
 def k_selectors_for_event_name_and_context__set(event_name, context)
   "#{REDIS_PREFIX}#{context}.#{event_name}.selectors"
-end
-
-#Lookup a list of selectors (quest+action) for a particular quest
-def k_selectors_for_quest_name_and_context__set(quest_name, context)
-  "#{REDIS_PREFIX}#{context}.#{quest_name}.selectors"
 end
 
 #Lookup member variables for a particular context
