@@ -3,6 +3,7 @@ GEM
   specs:
     json (1.8.1)
     redis (3.1.0)
+    thor (0.19.1)
 
 PLATFORMS
   ruby
@@ -10,3 +11,4 @@ PLATFORMS
 DEPENDENCIES
   json
   redis
+  thor
