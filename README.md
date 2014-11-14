@@ -57,7 +57,6 @@ selector_to_&selector
   * data.rb            - Contains interface to database documents
   * event_queue.rb     - Handles the incomming and outgoing event data
   * main_event_loop.rb - Process events or block
-  * dispatch_events.rb - Manages dispatching events to the appropriate handlers
   * quest.rb           - Manages the quest DSL
   * cron/
     * cron_event_loop  - Analagous to the main_event_loop, except this one manages the time priority and time general events
