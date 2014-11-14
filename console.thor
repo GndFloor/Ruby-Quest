@@ -24,4 +24,9 @@ class Questing < Thor
       puts "#"*40
     end
   end
+
+  desc "server", "Start a Quest instance"
+  def server
+    main_event_loop
+  end
 end
