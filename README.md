@@ -21,10 +21,18 @@ context = "a_user_session_key"
 add_quest_to_context "my_example_quest", context
 
 call_quest quest_name: "my_example_quest", action_name: "my_action", context: context, event: {}
+```
 
-#>bundle exec ruby main.rb
-#1
-#2
+##Starting / Console
+```ruby
+#Get a list of commands
+(sh)>bundle exec thor list
+
+#Print out all events coming in, will swallow events
+(sh)>bundle exec thor questing:dump_events
+
+#Queue up an example event
+(sh)>bundle exec thor questing:send_test_event
 ```
 
 ##Redis Keys
