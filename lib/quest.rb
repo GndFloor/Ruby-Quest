@@ -15,12 +15,13 @@
 #}
 $quests_hash = {}
 
-#Contains a hash that maps quests to all selectors (Not including init or dealloc)
+#Contains a hash that maps quests to selectors
+#See *selector* functions for parsing
+#<selector> which are String instances representing
+#serialized data
 #$quests_selectors_hash = {
-  #"my_quest" => [{
-    #:quest_name => "my_quest",
-    #:action_name => "my_action"
-  #}]
+#  "my_quest" => ["<selector>", "<selector>"],
+#  "my_quest_2" => ["<selector>"]
 #}
 $quests_selectors_hash = {}
 
