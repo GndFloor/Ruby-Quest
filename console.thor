@@ -27,7 +27,7 @@ class Questing < Thor
 
   desc "server", "Start a Quest instance"
   def server
-    lad './test/attach_my_quest_to_context.rb'
+    load './test/attach_my_quest_to_context.rb'
     main_event_loop
   end
 end
