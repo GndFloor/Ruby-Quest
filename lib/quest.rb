@@ -113,7 +113,6 @@ def add_quest_to_context(quest_name, context)
   quest_hash = $quests_hash[quest_name]
   
   quest_was_active = !$redis.sadd(k_active_quests_for_context__set(context), quest_name)
-  puts "Quest was active = #{quest_was_active}"
   return if quest_was_active
 
   #Collect selectors based on what events
