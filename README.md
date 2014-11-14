@@ -23,16 +23,16 @@ add_quest_to_context "my_example_quest", context
 call_quest quest_name: "my_example_quest", action_name: "my_action", context: context, event: {}
 ```
 
-##Starting / Console
+##Console / Start Server
 ```ruby
-#Get a list of commands
+#Get the full listing of commands
 (sh)>bundle exec thor list
 
-#Print out all events coming in, will swallow events
-(sh)>bundle exec thor questing:dump_events
-
-#Queue up an example event
+#Send a test event
 (sh)>bundle exec thor questing:send_test_event
+
+#Continually dequeue events from the main event queue and inspect these events
+(sh)>bundle exec thor questing:dump_events
 ```
 
 ##Redis Keys
