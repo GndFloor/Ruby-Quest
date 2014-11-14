@@ -64,7 +64,7 @@ selector_to_&selector
     * priority_time_event_queue - A special priority queue that moves events to the main queue when they are ready to be fired
 
 ##Event example
-``ruby
+```ruby
 #event_name
 #  The name of this event
 #event_context [Optional]
