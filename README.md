@@ -27,6 +27,7 @@ call_quest quest_name: "my_example_quest", action_name: "my_action", context: co
 ```ruby
 #Start a Quest server
 (sh)>bundle exec thor questing:server
+
 #Get the full listing of commands
 (sh)>bundle exec thor list
 
