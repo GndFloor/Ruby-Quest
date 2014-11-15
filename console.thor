@@ -10,7 +10,7 @@ class Questing < Thor
       event_context: "context"
     }
 
-    queue_event(my_event)
+    5.times { queue_event(my_event) }
   end
 
   desc "dump_events", "Grab and print out incomming events"
