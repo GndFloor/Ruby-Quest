@@ -7,11 +7,26 @@ def main_event_loop
     context = event["event_context"]
     selector = event["event_selector"]
 
-    #Extract info from selector
-    quest_name = quest_name_for_selector(selector)
-    action_name = action_name_for_selector(selector)
+    if selector
+      handle_selector_events event
+    else
+      handle_broadcast_events event
+    end
+  end
+end
 
-    #Call
-    call_quest quest_name: quest_name, action_name: action_name, context: context, event: event
+def handle_selector_events event
+  quest_name = quest_name_for_selector(event["event_selector"])
+  action_name = action_name_for_selector(event["event_selector"])
+  
+  call_quest quest_name: quest_name, action_name: action_name, context: event["event_context"], event: event
+end
+
+def handle_broadcast_events event
+  selectors = $redis.smembers k_selectors_for_event_name_and_context__set(event["event_name"], event["event_context"])
+  
+  selectors.each do |selector|
+    event["event_selector"] = selector
+    queue_event event
   end
 end
