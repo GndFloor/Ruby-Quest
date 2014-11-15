@@ -75,9 +75,17 @@ selector_to_&selector
 
 ##Event example
 ```ruby
-example_event_a = {
-  event_name: "my_event",
-  event_context: "f31719gm",
-  event_selector: "<selector>"
+#Fully qualified selector event. Will result in one action call.
+{
+  event_name: 'test_event',
+  event_context: 'context',
+  event_selector: '<selector>'
+}
+
+#Context specific broadcast event. Will result in all applicable fully
+#qualified selector events.
+{
+  event_name: 'test_event',
+  event_context: 'context'
 }
 ```
