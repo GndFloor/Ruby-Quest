@@ -12,7 +12,7 @@ def move_expired_priority_time_events_to_main_event_queue
   return expired_events
 end
 
-def schedule event:, time:
+def schedule(event:, time:)
   stringized_event = event.to_json
   $redis_cron.zadd REDIS_FUTURE_PRIORITY_QUEUE_KEY, time.to_i, stringized_event
 end
