@@ -1,3 +1,5 @@
+require 'securerandom'
+
 begin
   Bundler.require
 rescue => e

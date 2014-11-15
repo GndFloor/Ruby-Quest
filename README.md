@@ -46,16 +46,13 @@ Ruby-Quest relies on data stored in redis.  The following lists all the keys tha
 ```ruby
 #Per Context
 ################################################################################################
-$context.active_quests: Set          #The current active quests for $context
+$context.active_quests: Hash         #{'my_quest0':'37F..', 'my_quest1':'2B5'} i.e. <name, instance>
 $context.$event_name.selectors: Set  #The quests selectors that are applicable for a given context and event
 $context.$quest_name.variables: Hash #The "instance" variables that are part of an active quest
 
 #Global
 ################################################################################################
-$event_name.selectors                #Selectors for an event that have been declared as global.  These contain binded contexts.
-
-selector_to_&selector
-
+active_quest_instances: Set          #All active quest instances
 
 ```
 

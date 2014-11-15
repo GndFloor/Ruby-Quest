@@ -122,8 +122,11 @@ def add_quest_to_context(quest_name, context)
 
   quest_hash = $quests_hash[quest_name]
   
-  quest_was_active = !$redis.sadd(k_active_quests_for_context__set(context), quest_name)
+  instance = SecureRandom.hex
+  quest_was_active = !$redis.hsetnx(k_active_quests_for_context__hash(context), quest_name, instance)
   return if quest_was_active
+
+  $redis.sadd k_active_quest_instances__set, instance
 
   #Collect selectors based on what events
   #each action responds to

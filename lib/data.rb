@@ -1,6 +1,11 @@
 ####################################################################################################
+#A global table of all running quest instances, useful for invalidating scheduled events
+def k_active_quest_instances__set
+  "#{REDIS_PREFIX}active_quest_instances"
+end
+
 #Quests for the current context
-def k_active_quests_for_context__set(context)
+def k_active_quests_for_context__hash(context)
   "#{REDIS_PREFIX}#{context}.active_quests"
 end
 
