@@ -7,8 +7,7 @@ class Questing < Thor
 
     my_event = {
       event_name: "my_event",
-      event_context: "context",
-      event_selector: test_event_selector
+      event_context: "context"
     }
 
     queue_event(my_event)
