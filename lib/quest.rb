@@ -152,8 +152,13 @@ def remove_quest_from_context(quest_name, context)
   #Verify quest exists
   raise "No such quest name: #{quest_name}" unless $quests_hash[quest_name]
 
-  #Remove $quest_name from $context.active_quests
-  $redis.srem(k_active_quests_for_context__set(context), quest_name)
+  #Get this quest/context instance identifier
+  instance = $redis.hget k_active_quests_for_context_hash(context), quest_name
+  raise "No instance could be found for the context: #{context} and quest: #{quest_name}" unless instance
+
+  #Remove $quest_name from $context.active_quests and the instance identifier from active_quest_instances
+  $redis.srem k_active_quest_instances__set, instance
+  $redis.hdel k_active_quests_for_context__hash(context), quest_name
 
   #Remove $context.$quest_name.variables
   $redis.del(k_variables_for_quest_name_and_context__string(quest_name, context))
