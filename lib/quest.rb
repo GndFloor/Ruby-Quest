@@ -61,7 +61,8 @@ def at time, action_name
   scheduled_event = {
     event_name: "at",
     event_context: @context,
-    event_selector: selector_for(quest_name: @quest_name, action_name: action_name)
+    event_selector: selector_for(quest_name: @quest_name, action_name: action_name),
+    quest_instance: $redis.hget(k_active_quests_for_context__hash(@context), @quest_name)
   }
 
   schedule event: scheduled_event, time: time
@@ -153,7 +154,7 @@ def remove_quest_from_context(quest_name, context)
   raise "No such quest name: #{quest_name}" unless $quests_hash[quest_name]
 
   #Get this quest/context instance identifier
-  instance = $redis.hget k_active_quests_for_context_hash(context), quest_name
+  instance = $redis.hget k_active_quests_for_context__hash(context), quest_name
   raise "No instance could be found for the context: #{context} and quest: #{quest_name}" unless instance
 
   #Remove $quest_name from $context.active_quests and the instance identifier from active_quest_instances

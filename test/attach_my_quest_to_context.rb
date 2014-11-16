@@ -9,4 +9,5 @@ quest :my_quest do
   end
 end
 
+remove_quest_from_context "my_quest", "context"
 add_quest_to_context "my_quest", "context"

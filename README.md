@@ -79,6 +79,14 @@ active_quest_instances: Set          #All active quest instances
   event_selector: '<selector>'
 }
 
+#Fully qualified selector event. Quest instance verifies quest is still part of context, used for scheduled events. Will result in one action call.
+{
+  event_name: 'test_event',
+  event_context: 'context',
+  event_selector: '<selector>',
+  quest_instance: '<random hash>',
+}
+
 #Context specific broadcast event. Will result in all applicable fully
 #qualified selector events.
 {
@@ -86,3 +94,11 @@ active_quest_instances: Set          #All active quest instances
   event_context: 'context'
 }
 ```
+
+##Known issues
+
+1. An event with a context but no selector is known as a multicast event.  When a multicast event is recieved, Quest figures out what selectors are applicable to the multicast event and then sends out a new event for each applicable selector where each new event is the original multicast event with a little more specificity. If a quest is removed from a context during this second dispatch, there is no check to make sure that the event is still valid for a quest.  Even if the quest is re-added, there is no guarantee that 'this' quest is equal to 'that' quest, even if they carry the same name.  Schedule does this currently, and it would be easy to implement for the multicast dispatch by following the quest_instance protocol.
+
+2. Multiple daemons will have concurrency issues.  The cron daemon will attempt to pick off from each active daemon which could have some contention issues. Need to implement better locking procedures. This case also exists with multiple entries into a quest.
+
+3. During server shutdown, we need to make sure that an event is not currently being processed.

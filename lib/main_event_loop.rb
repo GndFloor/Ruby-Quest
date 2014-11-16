@@ -16,6 +16,11 @@ def main_event_loop
 end
 
 def handle_selector_events event
+  #Instance is no longer valid. Probably removed the quest from the context but a scheduled event was dispatched
+  if event["quest_instance"]
+    return unless $redis.sismember(k_active_quest_instances__set, event["quest_instance"])
+  end
+
   quest_name = quest_name_for_selector(event["event_selector"])
   action_name = action_name_for_selector(event["event_selector"])
   
