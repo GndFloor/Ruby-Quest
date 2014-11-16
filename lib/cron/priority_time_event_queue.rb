@@ -14,5 +14,5 @@ end
 
 def schedule(event:, time:)
   stringized_event = event.to_json
-  $redis_cron.zadd REDIS_FUTURE_PRIORITY_QUEUE_KEY, time.to_i, stringized_event
+  $redis.zadd REDIS_FUTURE_PRIORITY_QUEUE_KEY, time.to_i, stringized_event
 end
